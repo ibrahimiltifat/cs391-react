@@ -1,23 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
-
+import LoginTeacher from './LoginTeacher.js';
+import React, { useEffect } from 'react';
 function App() {
+
+  useEffect(() => {
+    const testUsers = [
+      {
+        email: 'erdem.gonul@ozu.edu.tr',
+        password: 'admin1234'
+      },
+      {
+        email: 'ahmet.gonul@ozu.edu.tr',
+        password: 'admin1234'
+      },
+      {
+        email: 'deneme.gonul@ozu.edu.tr',
+        password: 'admin1234'
+      }
+    ]
+
+    localStorage.setItem('users', JSON.stringify(testUsers));
+  }, []);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container-fluid my-auto ">
+      <LoginTeacher />
     </div>
   );
 }
