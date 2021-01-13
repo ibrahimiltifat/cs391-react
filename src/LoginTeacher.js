@@ -1,34 +1,23 @@
-import React, { useState} from 'react';
-
+import React, { useState } from 'react';
+import {
+    useHistory 
+} from "react-router-dom";
 
 function LoginTeacher() {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-
+    let history = useHistory();
 
     function onButtonClick() {
         validateUser(email, password);
     }
-
+    function changeRoute(){
+        history.push("/");
+    }
     const validateUser = (email, password) => {
-        const testUsers = [
-            {
-                email: 'erdem.gonul@ozu.edu.tr',
-                password: 'admin1234'
-            },
-            {
-                email: 'ahmet.gonul@ozu.edu.tr',
-                password: 'admin1234'
-            },
-            {
-                email: 'deneme.gonul@ozu.edu.tr',
-                password: 'admin1234'
-            }
-        ]
-
-        localStorage.setItem('users', JSON.stringify(testUsers));
-        const users = localStorage.getItem('users') ? JSON.parse(localStorage.getItem('users')) : undefined;
+       
+        const users = localStorage.getItem('usersTeachers') ? JSON.parse(localStorage.getItem('usersTeachers')) : undefined;
 
         if (users !== undefined) {
             console.log("ee", users)
@@ -62,7 +51,8 @@ function LoginTeacher() {
                     <label htmlFor="exampleInputPassword1">Password</label>
                     <input type="password" className="form-control" onChange={(e) => setPassword(e.target.value)} value={password} id="exampleInputPassword1" placeholder="Password" />
                 </div>
-                <p><a href="../">Sign In</a> as Student</p>
+                
+                <p><a href="" onClick={changeRoute}>Sign In</a> as Student</p>
                 <div id="errorMessage">
 
                 </div>

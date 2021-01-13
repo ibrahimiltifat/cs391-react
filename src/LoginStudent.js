@@ -1,19 +1,24 @@
 import React, { useState } from 'react';
-
+import {
+    useHistory
+} from "react-router-dom";
 
 function LoginStudent() {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    let history = useHistory();
 
 
     function onButtonClick() {
         validateUser(email, password);
     }
-
+    function changeRoute() {
+        history.push("/");
+    }
     const validateUser = (email, password) => {
-       
-        const users = localStorage.getItem('users') ? JSON.parse(localStorage.getItem('users')) : undefined;
+
+        const users = localStorage.getItem('usersStudents') ? JSON.parse(localStorage.getItem('usersStudents')) : undefined;
 
         if (users !== undefined) {
             console.log("ee", users)
@@ -47,7 +52,7 @@ function LoginStudent() {
                     <label htmlFor="exampleInputPassword1">Password</label>
                     <input type="password" className="form-control" onChange={(e) => setPassword(e.target.value)} value={password} id="exampleInputPassword1" placeholder="Password" />
                 </div>
-                <p><a href="../">Sign In</a> as Student</p>
+                <p><a href="/teacher" onClick={changeRoute}>Sign In</a> as Teacher</p>
                 <div id="errorMessage">
 
                 </div>
