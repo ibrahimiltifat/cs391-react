@@ -3,6 +3,7 @@ import LoginTeacher from './LoginTeacher.js';
 import LoginStudent from './LoginStudent.js';
 import Course from './Course.js';
 import Menu from './Menu.js';
+import EnrollCourse from './EnrollCourse.js';
 
 import {
   BrowserRouter as Router,
@@ -15,14 +16,17 @@ function App() {
   useEffect(() => {
     const testStudents = [
       {
+        name: 'erdem',
         email: 'erdem.gonul@ozu.edu.tr',
         password: 'admin1234'
       },
       {
+        name: 'ahmet',
         email: 'ahmet.gonul@ozu.edu.tr',
         password: 'admin1234'
       },
       {
+        name: 'deneme',
         email: 'deneme.gonul@ozu.edu.tr',
         password: 'admin1234'
       }
@@ -44,8 +48,8 @@ function App() {
       }
     ]
 
-    localStorage.setItem('usersTeachers', JSON.stringify(testStudents));
-    localStorage.setItem('usersStudents', JSON.stringify(testTeachers));
+    localStorage.setItem('usersTeachers', JSON.stringify(testTeachers));
+    localStorage.setItem('usersStudents', JSON.stringify(testStudents));
   }, []);
 
 
@@ -61,8 +65,14 @@ function App() {
           <Route path="/courses">
             <Course />
           </Route>
-          <Route path="/">
+          <Route path="/loginstudent">
             <LoginStudent />
+          </Route>
+          <Route path="/enrollcourse">
+            <EnrollCourse />
+          </Route>
+          <Route path="/">
+            <EnrollCourse />
           </Route>
         </Switch>
       </Router>

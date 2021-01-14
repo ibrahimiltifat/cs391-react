@@ -29,6 +29,7 @@ function LoginStudent() {
                 if (user.email === email && user.password === password) {
                     alert("Successful login");
                     isFailed = false;
+                    sessionStorage.setItem('currentUser', JSON.stringify(users[i]));
                     break;
                 }
             }

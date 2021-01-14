@@ -24,9 +24,23 @@ function Course() {
         } else {
             alert('You have to fill all empty inputs')
         }
-
     }
 
+    const Table = () => {
+        return (
+            <table class="table table-checkout" id="table" >
+                <thead>
+                    <tr>
+                        <th>Course Name</th>
+                        <th>Course Code</th>
+                        <th>Teacher</th>
+                        <th>Weekday</th>
+                    </tr>
+                </thead>
+                <Courses />
+            </table >
+        );
+    }
     const Courses = () => {
         let courses = localStorage.getItem("courses") ? JSON.parse(localStorage.getItem("courses")) : [];
 
@@ -41,8 +55,8 @@ function Course() {
 
     return (
         <div>
-            <div class="parent">
-                <div class="holder">
+            <div className="row">
+                <div class="col mt-4">
                     <h1>Enrolling courses For Students</h1>
                     <h2>Please enter your course details:</h2>
 
@@ -61,20 +75,9 @@ function Course() {
                     <button type="submit" name="submit" value="Register" id="btn" onClick={() => saveCourse()}>Register Course</button>
                 </div>
             </div>
-            <div class="welcome">
-                <p class="intro">List of courses</p>
-                <table class="table table-checkout" id="table">
-                    <thead>
-                        <tr>
-                            <th>Course Name</th>
-                            <th>Course Code</th>
-                            <th>Teacher</th>
-                            <th>Weekday</th>
-                        </tr>
-                    </thead>
-                    <Courses />
-                </table>
-
+            <div className="row mt-4">
+                <h1>List of courses</h1>
+                <Table />
             </div>
         </div >
     );

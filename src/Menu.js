@@ -25,7 +25,10 @@ function Menu() {
             <a class="nav-link" onClick={() => history.push("/courses")}>Register Courses</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" onClick={() => history.push("/")}>Login Student</a>
+            <a class="nav-link" onClick={() => history.push("/enrollcourse")}>Enroll Courses</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" onClick={() => history.push("/loginstudent")}>Login Student</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" onClick={() => history.push("/teacher")}>Login Teacher</a>
