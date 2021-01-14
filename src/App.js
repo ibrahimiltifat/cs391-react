@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import LoginTeacher from './LoginTeacher.js';
 import LoginStudent from './LoginStudent.js';
+import Course from './Course.js';
+import Menu from './Menu.js';
 
 import {
   BrowserRouter as Router,
@@ -49,10 +51,15 @@ function App() {
 
   return (
     <div className="container-fluid my-auto ">
+
       <Router>
+        <Menu />
         <Switch>
           <Route path="/teacher">
             <LoginTeacher />
+          </Route>
+          <Route path="/courses">
+            <Course />
           </Route>
           <Route path="/">
             <LoginStudent />

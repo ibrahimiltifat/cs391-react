@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {
-    useHistory 
+    useHistory
 } from "react-router-dom";
 
 function LoginTeacher() {
@@ -12,11 +12,11 @@ function LoginTeacher() {
     function onButtonClick() {
         validateUser(email, password);
     }
-    function changeRoute(){
+    function changeRoute() {
         history.push("/");
     }
     const validateUser = (email, password) => {
-       
+
         const users = localStorage.getItem('usersTeachers') ? JSON.parse(localStorage.getItem('usersTeachers')) : undefined;
 
         if (users !== undefined) {
@@ -51,7 +51,7 @@ function LoginTeacher() {
                     <label htmlFor="exampleInputPassword1">Password</label>
                     <input type="password" className="form-control" onChange={(e) => setPassword(e.target.value)} value={password} id="exampleInputPassword1" placeholder="Password" />
                 </div>
-                
+
                 <p><a href="" onClick={changeRoute}>Sign In</a> as Student</p>
                 <div id="errorMessage">
 
