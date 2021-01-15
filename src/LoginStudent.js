@@ -30,6 +30,7 @@ function LoginStudent() {
                     alert("Successful login");
                     isFailed = false;
                     sessionStorage.setItem('currentUser', JSON.stringify(users[i]));
+                    window.location.reload()
                     break;
                 }
             }
@@ -43,6 +44,8 @@ function LoginStudent() {
     return (
         <div className="row mt-5">
             <div className="col m bg-light  align-middle">
+                <h4>Student Login Screen</h4>
+
                 <h4>Please enter your username and password</h4>
                 <div className="form-group">
                     <label htmlFor="exampleInputEmail1">Email address</label>

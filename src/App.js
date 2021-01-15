@@ -18,33 +18,42 @@ function App() {
       {
         name: 'erdem',
         email: 'erdem.gonul@ozu.edu.tr',
-        password: 'admin1234'
+        password: 'admin1234',
+        isStudent: true
       },
       {
         name: 'ahmet',
         email: 'ahmet.gonul@ozu.edu.tr',
-        password: 'admin1234'
+        password: 'admin1234',
+        isStudent: true
       },
       {
         name: 'deneme',
         email: 'deneme.gonul@ozu.edu.tr',
-        password: 'admin1234'
+        password: 'admin1234',
+        isStudent: true
       }
     ]
 
 
     const testTeachers = [
       {
+        name: 'erdem',
         email: 'erdem.gonul@ozu.edu.tr',
-        password: 'admin1234'
+        password: 'admin1234',
+        isStudent: false
       },
       {
+        name: 'erdem',
         email: 'ahmet.gonul@ozu.edu.tr',
-        password: 'admin1234'
+        password: 'admin1234',
+        isStudent: false
       },
       {
+        name: 'erdem',
         email: 'deneme.gonul@ozu.edu.tr',
-        password: 'admin1234'
+        password: 'admin1234',
+        isStudent: false
       }
     ]
 
