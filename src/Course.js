@@ -9,6 +9,7 @@ function Course() {
     const [teacher, setTeacher] = useState('');
     const [courseCode, setCourseCode] = useState('');
     const [weekDay, setWeekDay] = useState('');
+    const [minGrade, setMinGrade] = useState(0);
 
 
     const [currentUser, setCurrentUser] = useState(undefined);
@@ -18,7 +19,8 @@ function Course() {
 
 
         setCurrentUser(sessionStorage.getItem('currentUser') ? JSON.parse(sessionStorage.getItem('currentUser')) : undefined);
-        if (!currentUser || JSON.parse(sessionStorage.getItem('currentUser')).isStudent) {
+        if (!sessionStorage.getItem('currentUser') || JSON.parse(sessionStorage.getItem('currentUser')).isStudent == true) {
+
             alert("You cant enter that page, you have to sign in as Teacher");
             history.push('/teacher')
         }
@@ -31,6 +33,7 @@ function Course() {
                 teacher: teacher,
                 courseCode: courseCode,
                 weekday: weekDay,
+                minGrade: minGrade
             }
             let courses = localStorage.getItem("courses") ? JSON.parse(localStorage.getItem("courses")) : [];
             courses.push(course);
@@ -51,6 +54,8 @@ function Course() {
                         <th>Course Code</th>
                         <th>Teacher</th>
                         <th>Weekday</th>
+                        <th>Minimum Passing Grade</th>
+
                     </tr>
                 </thead>
                 <Courses />
@@ -62,7 +67,7 @@ function Course() {
 
         var rows = "";
         courses.map((row) => {
-            var currentRow = '<tr><td>' + row.courseName + '</td><td>' + row.courseCode + '</td><td>' + row.teacher + '</td><td>' + row.weekday + '</td></tr>';
+            var currentRow = '<tr><td>' + row.courseName + '</td><td>' + row.courseCode + '</td><td>' + row.teacher + '</td><td>' + row.weekday + '</td><td>' + row.minGrade + '</td></tr>';
             rows = rows + currentRow;
         })
 
@@ -73,25 +78,32 @@ function Course() {
         <div>
             <div className="row">
                 <div className="col mt-4">
+                    <h2>Hello , {currentUser && currentUser.name}</h2>
+
                     <h1>Enrolling courses For Students</h1>
                     <h2>Please enter your course details:</h2>
                     <div className="form-group">
                         <label htmlFor="exampleInputEmail1">Course Name</label>
-                        <input type="text" id="coursename" name="coursename" placeholder="Introduction To Mathematic" onChange={(e) => setCourseName(e.target.value)} value={courseName} className="form-control" id="exampleInputEmail1" />
+                        <input required type="text" id="coursename" name="coursename" placeholder="Introduction To Mathematic" onChange={(e) => setCourseName(e.target.value)} value={courseName} className="form-control" id="exampleInputEmail1" />
                     </div>
                     <div className="form-group">
                         <label htmlFor="exampleInputEmail1">Course Teacher</label>
-                        <input type="text" id="teacher" name="teacher" placeholder="Esma Meral" onChange={(e) => setTeacher(e.target.value)} value={teacher} className="form-control" id="exampleInputEmail1" />
+                        <input required type="text" id="teacher" name="teacher" placeholder="Esma Meral" onChange={(e) => setTeacher(e.target.value)} value={teacher} className="form-control" id="exampleInputEmail1" />
                     </div>
 
                     <div className="form-group">
                         <label htmlFor="exampleInputEmail1">Course Code</label>
-                        <input type="text" id="coursecode" name="coursecode" placeholder="CS391" onChange={(e) => setCourseCode(e.target.value)} value={courseCode} className="form-control" id="exampleInputEmail1" />
+                        <input required type="text" id="coursecode" name="coursecode" placeholder="CS391" onChange={(e) => setCourseCode(e.target.value)} value={courseCode} className="form-control" id="exampleInputEmail1" />
                     </div>
 
                     <div className="form-group">
                         <label htmlFor="exampleInputEmail1">Course Day</label>
-                        <input type="text" id="weekday" name="weekday" placeholder="Friday" onChange={(e) => setWeekDay(e.target.value)} value={weekDay} className="form-control" id="exampleInputEmail1" />
+                        <input required type="text" id="weekday" name="weekday" placeholder="Friday" onChange={(e) => setWeekDay(e.target.value)} value={weekDay} className="form-control" id="exampleInputEmail1" />
+                    </div>
+
+                    <div className="form-group">
+                        <label htmlFor="exampleInputEmail1">Minimum Course Grade</label>
+                        <input required type="number" id="minCourseGrade" name="minCourseGrade" placeholder="60" onChange={(e) => setMinGrade(e.target.value)} value={minGrade} className="form-control" id="exampleInputEmail1" />
                     </div>
                     <button id="login" type="submit" value="Register" id="btn" className="btn btn-primary" onClick={() => saveCourse()}>
                         Register Course

@@ -81,7 +81,7 @@ function App() {
             <EnrollCourse />
           </Route>
           <Route path="/">
-            <EnrollCourse />
+            <LoginTeacher />
           </Route>
         </Switch>
       </Router>

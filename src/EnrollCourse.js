@@ -14,7 +14,7 @@ function EnrollCourse() {
 
 
         setCurrentUser(sessionStorage.getItem('currentUser') ? JSON.parse(sessionStorage.getItem('currentUser')) : undefined);
-        if (!currentUser || !JSON.parse(sessionStorage.getItem('currentUser')).isStudent) {
+        if (!sessionStorage.getItem('currentUser') || JSON.parse(sessionStorage.getItem('currentUser')).isStudent == false) {
             alert("You cant enter that page, you have to sign in as Student");
             history.push('/loginstudent')
         }
@@ -65,9 +65,7 @@ function EnrollCourse() {
         return coursesOfUser ? coursesOfUser : { user: undefined, courses: [] };
     }
 
-    function withdrawCourse(course) {
-        console.log(course)
-    }
+
 
     const TableCourses = () => {
         return (
@@ -78,6 +76,7 @@ function EnrollCourse() {
                         <th>Course Code</th>
                         <th>Teacher</th>
                         <th>Weekday</th>
+                        <th>Minimum Passing Grade</th>
                         <th>Enroll</th>
                     </tr>
                 </thead>
@@ -94,7 +93,8 @@ function EnrollCourse() {
                         <th>Course Code</th>
                         <th>Teacher</th>
                         <th>Weekday</th>
-                        <th>Withdraw</th>
+                        <th>Minimum Passing Grade</th>
+
                     </tr>
                 </thead>
                 <MyCoursesBody />
@@ -112,6 +112,8 @@ function EnrollCourse() {
                     <td>{row.courseCode}</td>
                     <td>{row.teacher}</td>
                     <td>{row.weekday}</td>
+                    <td>{row.minGrade}</td>
+
                     <td><button onClick={() => enrollCourse(row)}>Enroll</button></td>
                 </tr>
             ))}
@@ -138,7 +140,9 @@ function EnrollCourse() {
                     <td>{row.courseCode}</td>
                     <td>{row.teacher}</td>
                     <td>{row.weekday}</td>
-                    <td><button onClick={() => withdrawCourse(row)}>Withdraw</button></td>
+                    <td>{row.minGrade}</td>
+
+
                 </tr>
             ))}
         </tbody>;
@@ -147,7 +151,7 @@ function EnrollCourse() {
 
     return (
         <div>
-            <h2>Hello , {currentUser && currentUser}</h2>
+            <h2>Hello , {currentUser && currentUser.name}</h2>
             <div className="row mt-4">
                 <div className="col mt-4">
                     <h1>List of courses</h1>
