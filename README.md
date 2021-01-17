@@ -34,11 +34,11 @@ You cant start the project with
 
 4- User can log out if logged from the right top of the menu.
 
-5- Teacher can register a course from Register Course Page.
+5- Teacher can register a course from Add Course Page.
 
-6- Teacher can display all courses in a table format in register course page.
+6- Teacher can display all courses in a table format in all course page.
 
 7- Student can enroll a course from all courses in Enroll Course Page.
 
-8- Student can display all courses. If current signed user is already enrolled that course there will pop up an alert.
+8- Student can display all courses. If current signed user is already enrolled.
 
