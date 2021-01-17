@@ -14,19 +14,20 @@ used Express js to create the server and nedb a light weight nosql db to store d
 
 clone the project and 'npm install' inside the project directory.
 
-You cant start the project with 'npm run dev' command
+You cant start the project with 
+### 'npm run dev' command
 
 
 # Features
 
 1- you can find logins as below: 
 
-teacher:
-teacher@lms.com
-teacher
-Students:
-student@lms.com
-student
+### teacher:
+#### teacher@lms.com
+#### teacher
+### Students:
+#### student@lms.com
+#### student
 
 
 3- According to his user type ( teacher or student), user can enter the enrolling course page as student or register course page as teacher.
