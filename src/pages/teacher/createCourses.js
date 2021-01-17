@@ -114,6 +114,6 @@ export default function CreateCourses() {
 					</Form>
 				</Col>
 			</Col>
-		</Layout>
+		</Layout >
 	);
 }
