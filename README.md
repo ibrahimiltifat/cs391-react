@@ -1,70 +1,35 @@
-# Getting Started with Create React App
+# CS391 React Project
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This application is a course registration and course enrollment website. It uses WebStorage API to storing datas.
 
-## Available Scripts
 
-In the project directory, you can run:
+Used bootstrap CDN + react router as external libraries.
 
-### `npm start`
+Ahmet Erdem Gönül : Create project with bootstrap cdn, react router and create-react-app and add repo to github. Initiliazed pages and made the transformation of html css and vanilla javascript code into React code. Added login option as student or teacher. Created all React Components as subcomponents in each file. Enrolling Courses as students, displaying courses, registering a course as teacher added. Used local and session storage to storing datas.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+# How to start ?
 
-### `npm test`
+clone the project and 'npm install' inside the project directory.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+You cant start the project with 'npm start' command
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+# Features
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+1- For Sample User Login Informations, you can check App.js or here is a sample for both student and teacher pages. (email: erdem.gonul@ozu.edu.tr password: admin1234)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+2- User can login as teacher or student from the right of the menu.
 
-### `npm run eject`
+3- According to his user type ( teacher or student), user can enter the enrolling course page as student or register course page as teacher.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+4- User can log out if logged from the right top of the menu.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+5- Teacher can register a course from Register Course Page.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+6- Teacher can display all courses in a table format in register course page.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+7- Student can enroll a course from all courses in Enroll Course Page.
 
-## Learn More
+8- Student can display all courses. If current signed user is already enrolled that course there will pop up an alert.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
