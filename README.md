@@ -7,7 +7,9 @@ Used bootstrap CDN + react router as external libraries.
 
 Create project with bootstrap cdn, react router and create-react-app and add repo to github. Initiliazed pages and made the transformation of html css and vanilla javascript code into React code. Added login option as student or teacher. Created all React Components as subcomponents in each file. Enrolling Courses as students, displaying courses, registering a course as teacher added. Used local and session storage to storing datas.
 
-used Express js to create the server and nedb a light weight nosql db to store data. for this project we need to run the server to make it work properly, please see instruction below to know how to start the project. API is running on 8001 port. 
+Abdulwahab: Used Express js to create the server and nedb a light weight nosql db to store data. for this project we need to run the server to make it work properly, please see instruction below to know how to start the project. API is running on 8001 port. 
+
+Ibrahim: Imporved the UI and cennected it with the backend. Created a private route so user not logged in can not access pages. 
 
 
 # How to start ?
