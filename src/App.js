@@ -1,83 +1,46 @@
-import React, { useEffect } from 'react';
-import LoginTeacher from './LoginTeacher.js';
-import LoginStudent from './LoginStudent.js';
-import Course from './Course.js';
-import Menu from './Menu.js';
-import EnrollCourse from './EnrollCourse.js';
+import React, { useEffect } from "react";
+import LoginTeacher from "./LoginTeacher.js";
+import LoginStudent from "./LoginStudent.js";
+import Course from "./Course.js";
+import EnrollCourse from "./EnrollCourse.js";
+import PrivateRoute from "./routes/PrivateRoute";
+import CreateCourse from "./pages/teacher/createCourses";
+import MyCourses from "./pages/teacher/myCourses";
+import "./App.css";
 
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-} from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 function App() {
+	useEffect(() => {
+		fetch("http://localhost:8001/api/students/signUP", { method: "GET" })
+			.then((response) => response.json())
+			.then((data) => console.log(data));
 
-  useEffect(() => {
-    const testStudents = [
-      {
-        name: 'erdem',
-        email: 'erdem.gonul@ozu.edu.tr',
-        password: 'admin1234'
-      },
-      {
-        name: 'ahmet',
-        email: 'ahmet.gonul@ozu.edu.tr',
-        password: 'admin1234'
-      },
-      {
-        name: 'deneme',
-        email: 'deneme.gonul@ozu.edu.tr',
-        password: 'admin1234'
-      }
-    ]
+		fetch("http://localhost:8001/api/teachers/signUP", { method: "GET" })
+			.then((response) => response.json())
+			.then((data) => console.log(data));
+	}, []);
 
-
-    const testTeachers = [
-      {
-        email: 'erdem.gonul@ozu.edu.tr',
-        password: 'admin1234'
-      },
-      {
-        email: 'ahmet.gonul@ozu.edu.tr',
-        password: 'admin1234'
-      },
-      {
-        email: 'deneme.gonul@ozu.edu.tr',
-        password: 'admin1234'
-      }
-    ]
-
-    localStorage.setItem('usersTeachers', JSON.stringify(testTeachers));
-    localStorage.setItem('usersStudents', JSON.stringify(testStudents));
-  }, []);
-
-
-  return (
-    <div className="container-fluid my-auto ">
-
-      <Router>
-        <Menu />
-        <Switch>
-          <Route path="/teacher">
-            <LoginTeacher />
-          </Route>
-          <Route path="/courses">
-            <Course />
-          </Route>
-          <Route path="/loginstudent">
-            <LoginStudent />
-          </Route>
-          <Route path="/enrollcourse">
-            <EnrollCourse />
-          </Route>
-          <Route path="/">
-            <EnrollCourse />
-          </Route>
-        </Switch>
-      </Router>
-    </div>
-  );
+	return (
+		<Router>
+			<Switch>
+      <Route exact path="/">
+					<LoginStudent />
+				</Route>
+				<Route exact path="/teacher">
+					<LoginTeacher />
+				</Route>
+				<Route exact path="/loginstudent">
+					<LoginStudent />
+				</Route>
+				
+				<PrivateRoute path="/addcourses" component={CreateCourse} />
+				<PrivateRoute path="/mycourses" component={MyCourses} />
+				<PrivateRoute path="/enrollcourse" component={EnrollCourse} />
+				<PrivateRoute path="/courses" component={Course} />
+			</Switch>
+		</Router>
+	);
 }
 
 export default App;

@@ -1,88 +1,79 @@
-import React, { useState } from 'react';
+import React from "react";
+import Layout from "./layout/layout";
+import { Col, Table, Button } from "react-bootstrap";
 
-function Course() {
+export default function EnrollCourse() {
+	const [courses, setCourses] = React.useState([]);
+	const user = JSON.parse(localStorage.getItem("user"));
 
-    const [courseName, setCourseName] = useState('');
-    const [teacher, setTeacher] = useState('');
-    const [courseCode, setCourseCode] = useState('');
-    const [weekDay, setWeekDay] = useState('');
+	const fetchCourse = () => {
+		fetch("http://localhost:8001/api/courses/all")
+			.then((response) => response.json())
+			.then((data) => {
+				let temp = [];
+				data.forEach((item) => {
+					item.studentsEnrolled.forEach((id) => {
+						if (id === user._id) temp.push(item);
+					});
+				});
+				console.log(temp);
+				return temp;
+			})
+			.then((list) => setCourses(list));
+	};
 
+	React.useEffect(() => {
+		fetchCourse();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
-    function saveCourse() {
-        if (courseName.length > 0 && teacher.length > 0 && courseCode.length > 0 && weekDay.length > 0) {
-            let course = {
-                courseName: courseName,
-                teacher: teacher,
-                courseCode: courseCode,
-                weekday: weekDay,
-            }
-            let courses = localStorage.getItem("courses") ? JSON.parse(localStorage.getItem("courses")) : [];
-            courses.push(course);
-            localStorage.setItem("courses", JSON.stringify(courses));
-
-            window.location.reload();
-        } else {
-            alert('You have to fill all empty inputs')
-        }
-    }
-
-    const Table = () => {
-        return (
-            <table class="table table-checkout" id="table" >
-                <thead>
-                    <tr>
-                        <th>Course Name</th>
-                        <th>Course Code</th>
-                        <th>Teacher</th>
-                        <th>Weekday</th>
-                    </tr>
-                </thead>
-                <Courses />
-            </table >
-        );
-    }
-    const Courses = () => {
-        let courses = localStorage.getItem("courses") ? JSON.parse(localStorage.getItem("courses")) : [];
-
-        var rows = "";
-        courses.map((row) => {
-            var currentRow = '<tr><td>' + row.courseName + '</td><td>' + row.courseCode + '</td><td>' + row.teacher + '</td><td>' + row.weekday + '</td></tr>';
-            rows = rows + currentRow;
-        })
-
-        return <tbody dangerouslySetInnerHTML={{ __html: rows }}></tbody>;
-    }
-
-    return (
-        <div>
-            <div className="row">
-                <div class="col mt-4">
-                    <h1>Enrolling courses For Students</h1>
-                    <h2>Please enter your course details:</h2>
-
-                    <div class="form-input">
-                        <input id="coursename" name="coursename" placeholder="Math103" onChange={(e) => setCourseName(e.target.value)} value={courseName} />
-                    </div>
-                    <div class="form-input">
-                        <input id="teacher" name="teacher" placeholder="Esma Meral" onChange={(e) => setTeacher(e.target.value)} value={teacher} />
-                    </div>
-                    <div class="form-input">
-                        <input id="coursecode" name="coursecode" placeholder="CS391" onChange={(e) => setCourseCode(e.target.value)} value={courseCode} />
-                    </div>
-                    <div class="form-input">
-                        <input id="weekday" name="weekday" placeholder="Friday" onChange={(e) => setWeekDay(e.target.value)} value={weekDay} />
-                    </div>
-                    <button type="submit" name="submit" value="Register" id="btn" onClick={() => saveCourse()}>Register Course</button>
-                </div>
-            </div>
-            <div className="row mt-4">
-                <h1>List of courses</h1>
-                <Table />
-            </div>
-        </div >
-    );
-
-
+	const handleWithdraw = (e, course) => {
+		e.preventDefault();
+		const index = course.studentsEnrolled.indexOf(user._id);
+		if (index > -1) {
+			course.studentsEnrolled.splice(index, 1);
+		}
+		console.log(course);
+		fetch("http://localhost:8001/api/courses/drop", {
+			method: "PUT",
+			mode: "cors",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(course),
+		}).then(() => fetchCourse());
+	};
+	return (
+		<Layout>
+			<Col className="layout">
+				<h1 className="text-center"> List of Registered Courses </h1>
+				<Table striped bordered hover className="space">
+					<thead>
+						<tr>
+							<th>Course Name</th>
+							<th>Course Code</th>
+							<th>Teacher Name</th>
+							<th>Weekday</th>
+							<th>Enroll</th>
+						</tr>
+					</thead>
+					<tbody>
+						{courses.map((course) => (
+							<tr key={course}>
+								<td>{course.name}</td>
+								<td>{course.code}</td>
+								<td>{course.teacherName}</td>
+								<td>{course.day}</td>
+								<td>
+									<Button onClick={(e) => handleWithdraw(e, course)}>
+										Withdraw
+									</Button>
+								</td>{" "}
+							</tr>
+						))}
+					</tbody>
+				</Table>
+			</Col>
+		</Layout>
+	);
 }
-
-export default Course;

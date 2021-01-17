@@ -1,73 +1,85 @@
-import React, { useState } from 'react';
-import {
-    useHistory
-} from "react-router-dom";
+import React, { useState } from "react";
+import { Col, Container, Form, Button } from "react-bootstrap";
+import { Link, useHistory } from "react-router-dom";
 
 function LoginStudent() {
+	const [email, setEmail] = useState("");
+	const [password, setPassword] = useState("");
+	let history = useHistory();
 
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    let history = useHistory();
+	const handleChange = (event) => {
+		if (event.target.name === "email") {
+			setEmail(event.target.value);
+		} else if (event.target.name === "password") {
+			setPassword(event.target.value);
+		}
+	};
 
-
-    function onButtonClick() {
-        validateUser(email, password);
-    }
-    function changeRoute() {
-        history.push("/");
-    }
-    const validateUser = (email, password) => {
-
-        const users = localStorage.getItem('usersStudents') ? JSON.parse(localStorage.getItem('usersStudents')) : undefined;
-
-        if (users !== undefined) {
-            console.log("ee", users)
-            let isFailed = true;
-            for (let i = 0; i < users.length; i++) {
-                const user = users[i];
-                console.log(email, password)
-                if (user.email === email && user.password === password) {
-                    alert("Successful login");
-                    isFailed = false;
-                    sessionStorage.setItem('currentUser', JSON.stringify(users[i]));
-                    break;
-                }
-            }
-            if (isFailed) {
+	function handleLogin() {
+		fetch("http://localhost:8001/api/students/login", {
+			method: "POST",
+			mode: "cors",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({ email, password }),
+		})
+			.then((response) => response.json())
+			.then((data) => {
+                if(data===null)
                 alert("Wrong email password combination");
+                else {
+                localStorage.setItem("user", JSON.stringify(data));
+               history.push('/courses')
             }
-        }
+            })
+	}
 
-    };
+	return (
+		<Container>
+			<Col className="layout">
+				<h1 className="text-center"> Welcome to Course Registration System</h1>
+				<Col className="content" md="12">
+					<Col className="sigin-form">
+						<h2 className="text-center"> Student Sign In Page</h2>
+						<br />
+						<Form>
+							<Form.Group controlId="formBasicEmail">
+								<Form.Label>Email address</Form.Label>
+								<Form.Control
+									type="email"
+									name="email"
+									placeholder="Enter email"
+									onChange={handleChange}
+									required
+								/>
+							</Form.Group>
 
-    return (
-        <div className="row mt-5">
-            <div className="col m bg-light  align-middle">
-                <h4>Please enter your username and password</h4>
-                <div className="form-group">
-                    <label htmlFor="exampleInputEmail1">Email address</label>
-                    <input type="email" className="form-control" id="exampleInputEmail1" onChange={(e) => setEmail(e.target.value)} value={email} aria-describedby="emailHelp" placeholder="Enter email" />
-                    <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small>
-                </div>
-                <div className="form-group">
-                    <label htmlFor="exampleInputPassword1">Password</label>
-                    <input type="password" className="form-control" onChange={(e) => setPassword(e.target.value)} value={password} id="exampleInputPassword1" placeholder="Password" />
-                </div>
-                <p><a href="/teacher" onClick={changeRoute}>Sign In</a> as Teacher</p>
-                <div id="errorMessage">
-
-                </div>
-                <button id="login" type="submit" className="btn btn-primary" onClick={() => onButtonClick()}>
-                    Login
-				</button>
-            </div>
-            <div className="col align-middle">
-                <h2 >welcome to the course registration system</h2>
-            </div>
-        </div>
-    );
-
-
+							<Form.Group controlId="formBasicPassword">
+								<Form.Label>Password</Form.Label>
+								<Form.Control
+									type="password"
+									name="password"
+									placeholder="Password"
+									onChange={handleChange}
+									required
+								/>
+							</Form.Group>
+							<br />
+							<Button variant="primary" onClick={handleLogin} size="lg" block>
+								Sign In
+							</Button>
+							<br />
+							<p className="text-center">Or</p>
+							<p className="text-center">
+								Sign as <Link to="/teacher">Teacher</Link>
+							</p>
+						</Form>
+					</Col>
+				</Col>
+			</Col>
+		</Container>
+	);
 }
 
 export default LoginStudent;

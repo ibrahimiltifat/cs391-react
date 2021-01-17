@@ -1,111 +1,74 @@
-import React, { useState,useEffect } from 'react';
+import React from "react";
+import Layout from "./layout/layout";
+import { Col, Table, Button } from "react-bootstrap";
 
-function EnrollCourse() {
+export default function EnrollCourse() {
+	const [courses, setCourses] = React.useState([]);
+ 	const user = JSON.parse(localStorage.getItem("user"));
 
-    const [currentUser, setCurrentUser] = useState('');
+	const fetchCourse = () => {
+		fetch("http://localhost:8001/api/courses/all")
+			.then((response) => response.json())
+			.then((data) => {
+				setCourses(data);
+			});
+	};
 
+	React.useEffect(() => {
+		fetchCourse();
+	}, []);
 
-    useEffect(() => {
-
-        setCurrentUser(JSON.parse(sessionStorage.getItem('currentUser'))?.name)
-    },[])
-
-    function enrollCourse(course) {
-        console.log(course)
-    }
-
-    function withdrawCourse(course) {
-        console.log(course)
-    }
-
-    const TableCourses = () => {
-        return (
-            <table class="table table-checkout" id="table" >
-                <thead>
-                    <tr>
-                        <th>Course Name</th>
-                        <th>Course Code</th>
-                        <th>Teacher</th>
-                        <th>Weekday</th>
-                        <th>Enroll</th>
-                    </tr>
-                </thead>
-                <CoursesBody />
-            </table >
-        );
-    }
-    const TableMyCourses = () => {
-        return (
-            <table class="table table-checkout" id="table" >
-                <thead>
-                    <tr>
-                        <th>Course Name</th>
-                        <th>Course Code</th>
-                        <th>Teacher</th>
-                        <th>Weekday</th>
-                        <th>Withdraw</th>
-                    </tr>
-                </thead>
-                <MyCoursesBody />
-            </table >
-        );
-    }
-    const CoursesBody = () => {
-        let courses = localStorage.getItem("courses") ? JSON.parse(localStorage.getItem("courses")) : [];
-
-
-        return <tbody >
-            {courses.map((row) => (
-                <tr>
-                    <td>{row.courseName} </td>
-                    <td>{row.courseCode}</td>
-                    <td>{row.teacher}</td>
-                    <td>{row.weekday}</td>
-                    <td><button onClick={() => enrollCourse(row)}>Enroll</button></td>
-                </tr>
-            ))}
-        </tbody>;
-    }
-
-
-    const MyCoursesBody = () => {
-        let courses = localStorage.getItem("courses") ? JSON.parse(localStorage.getItem("courses")) : [];
-
-
-        return <tbody >
-            {courses.map((row) => (
-                <tr>
-                    <td>{row.courseName} </td>
-                    <td>{row.courseCode}</td>
-                    <td>{row.teacher}</td>
-                    <td>{row.weekday}</td>
-                    <td><button onClick={() => withdrawCourse(row)}>Withdraw</button></td>
-                </tr>
-            ))}
-        </tbody>;
-    }
-
-
-    return (
-        <div>
-            <h2>Hello , {currentUser && currentUser}</h2>
-            <div className="row mt-4">
-                <div class="col mt-4">
-                    <h1>List of courses</h1>
-                    <TableCourses />
-                </div>
-            </div>
-            <div className="row">
-                <div class="col mt-4">
-                    <h1>My Enrolled Courses</h1>
-
-                    <TableMyCourses />
-                </div>
-            </div>
-        </div >
-    );
-
-
+	const handleEnroll = (e, course) => {
+		e.preventDefault();
+		course.studentsEnrolled.push(user._id);
+		fetch("http://localhost:8001/api/courses/enroll", {
+			method: "PUT",
+			mode: "cors",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(course),
+		}).then(() => fetchCourse());
+	};
+	return (
+		<Layout>
+			<Col className="layout">
+				<h1 className="text-center"> List of Registered Courses </h1>
+				<Table striped bordered hover className="space">
+					<thead>
+						<tr>
+							<th>Course Name</th>
+							<th>Course Code</th>
+							<th>Teacher Name</th>
+							<th>Weekday</th>
+							<th>Enroll</th>
+						</tr>
+					</thead>
+					<tbody>
+						{courses.map((course) => (
+							<tr key={course}>
+								<td>{course.name}</td>
+								<td>{course.code}</td>
+								<td>{course.teacherName}</td>
+								<td>{course.day}</td>
+								<td>
+									<Button
+										onClick={(e) => handleEnroll(e, course)}
+										disabled={
+											course.studentsEnrolled.filter((id) => id === user._id)
+												.length > 0
+												? true
+												: false
+										}
+									>
+										Enroll
+									</Button>
+								</td>{" "}
+							</tr>
+						))}
+					</tbody>
+				</Table>
+			</Col>
+		</Layout>
+	);
 }
-
-export default EnrollCourse;
